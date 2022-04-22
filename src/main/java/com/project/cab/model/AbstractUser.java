@@ -1,5 +1,5 @@
 package com.project.cab.model;
 
-public abstract class User {
+public abstract class AbstractUser {
 
 }
