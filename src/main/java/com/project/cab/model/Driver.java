@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="DRIVER")
 public class Driver extends AbstractUser{
-	
+	//AD changing
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int driverId;
