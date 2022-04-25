@@ -1,5 +1,11 @@
 package com.project.cab.repository;
 
-public class TripBookingRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.project.cab.model.TripBooking;
+
+@Repository
+public interface TripBookingRepository extends JpaRepository<TripBooking, Integer>{
 
 }

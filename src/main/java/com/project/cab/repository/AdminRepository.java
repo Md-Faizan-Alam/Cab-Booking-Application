@@ -1,5 +1,11 @@
 package com.project.cab.repository;
 
-public class AdminRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.project.cab.model.Admin;
+
+@Repository
+public interface AdminRepository extends JpaRepository<Admin, Integer>{
 
 }

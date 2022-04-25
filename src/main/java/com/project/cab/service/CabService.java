@@ -1,5 +1,14 @@
 package com.project.cab.service;
 
-public class CabService {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import com.project.cab.repository.CabRepository;
+
+@Service
+public class CabService {
+	
+	@Autowired
+	CabRepository repository;
+	
 }
