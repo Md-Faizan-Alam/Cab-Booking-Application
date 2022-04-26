@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,6 +20,7 @@ public class TripBooking {
 	private int tripBookingId;
 	@Column(name = "customer_id")
 	private int customerId;
+	@OneToOne(targetEntity = Driver.class)
 	private Driver driver;
 	@Column(name = "from_location")
 	private String fromLocation;

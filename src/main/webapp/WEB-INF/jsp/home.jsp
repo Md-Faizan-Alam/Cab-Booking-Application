@@ -30,51 +30,40 @@
         height: 150px;
         color: white;
     }
-    #loginBlock{
+    #advert{
         background-color: rgb(26, 26, 26);
+        color: white;
+        padding: 100px;
         margin: 100px;
-        width: 300px;
-        color: white;
-        font-size: 20px;
-        border-radius: 40px;
-        padding: 40px;
-        font-family: 'Gill Sans', 'Gill Sans MT','Trebuchet MS', sans-serif;
+        width: 600px;
+        height: 100px;
+        font-size: 30px;
     }
-    input{
-        height: 20px;
-        border-radius: 10px;
-        border: 0px;
-        padding: 5px 15px;
-        margin: 10px 0px;
-        font-family: 'Gill Sans', 'Gill Sans MT','Trebuchet MS', sans-serif;
-    }
-    #login{
-        background-color: rgb(26, 26, 26);
+    .press{
         border: 2px solid white;
-        color: white;
+        border-radius: 10px;
+        padding: 10px 20px;
         font-size: 20px;
-        text-align: center;
-        height: 35px;
-        padding: 0px 20px;
-        position: relative;
-        left: 30px;
+        text-decoration: none;
+        color: white;
+        margin: 10px;
     }
-    #login:hover{
-        background-color: rgb(39, 39, 39);
-        border: 1px solid rgb(100, 100, 100);
+    #buttonContainer{
+        position: absolute;
+        right: 50px;
+        top: 50px;
     }
 </style>
 </head>
 <body>
-<header><p id="headTitle">Wheelin</p></header>
-<div id="loginBlock"><form action="/login">
-    <label for="userName">Username: </label>
-    <input type="text" name="userName" id="" placeholder="Username"><br>
-    <label for="password">Password: </label>
-    <input type="text" name="password" id="" placeholder="Password"><br>
-    <input type="button" id="login" value="Login">
-
-</form></div>
+<header>
+    <p id="headTitle">Wheelin</p>
+    <div id="buttonContainer">
+        <a class="press" href="/login">Login</a>
+        <a class="press" href="/register">Register</a>
+    </div>
+</header>
+<div id="advert">*Some random slogan*</div>
 <footer></footer>
 </body>
 </html>
