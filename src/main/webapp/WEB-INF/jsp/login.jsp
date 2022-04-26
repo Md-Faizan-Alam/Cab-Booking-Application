@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://jakarta.apache.org/taglibs/standard/permittedTaglibs" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,13 +68,12 @@
 </head>
 <body>
 <header><p id="headTitle">Wheelin</p></header>
-<div id="loginBlock"><form action="/login">
+<div id="loginBlock"><form action="/sign" method="post">
     <label for="userName">Username: </label>
     <input type="text" name="userName" id="" placeholder="Username"><br>
     <label for="password">Password: </label>
     <input type="text" name="password" id="" placeholder="Password"><br>
     <input type="submit" id="login" value="Login">
-
 </form></div>
 <footer></footer>
 </body>
