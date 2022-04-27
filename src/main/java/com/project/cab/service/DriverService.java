@@ -1,6 +1,8 @@
 package com.project.cab.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,12 @@ public class DriverService {
 	
 	public void deleteDriver(Driver driver) {
 		repository.save(driver);
+	}
+	
+	public List<Driver> viewBestDrivers(){
+		List<Driver> bestDriver = repository.findAll();
+		bestDriver = bestDriver.stream().filter(driver -> driver.getRating()>=4.5).collect(Collectors.toList());
+		return bestDriver;
 	}
 	
 	public Driver viewDriver(int driverId){
