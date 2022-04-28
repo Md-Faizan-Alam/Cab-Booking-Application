@@ -16,9 +16,9 @@ public class Customer extends AbstractUser{
 
 	public Customer() {}
 
-	public Customer(int customerId) {
-		super();
-		this.customerId = customerId;
+	public Customer(String username, String password, String address, String mobileNumber, String email) {
+		super(username, password, address, mobileNumber, email);
+		
 	}
 
 	public int getCustomerId() {

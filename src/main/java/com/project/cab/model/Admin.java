@@ -16,9 +16,9 @@ public class Admin extends AbstractUser{
 	
 	public Admin() {}
 
-	public Admin(int adminId) {
-		super();
-		this.adminId = adminId;
+	public Admin(String username, String password, String address, String mobileNumber, String email) {
+		super(username, password, address, mobileNumber, email);
+		
 	}
 
 	public int getAdminId() {

@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,9 +18,9 @@ public class TripBooking {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "trip_booking_id")
 	private int tripBookingId;
-	@Column(name = "customer_id")
-	private int customerId;
-	@OneToOne(targetEntity = Driver.class)
+	@ManyToOne(targetEntity = Customer.class)
+	private Customer customer;
+	@ManyToOne(targetEntity = Driver.class)
 	private Driver driver;
 	@Column(name = "from_location")
 	private String fromLocation;
@@ -38,10 +38,9 @@ public class TripBooking {
 	
 	public TripBooking(){}
 	
-	public TripBooking(int tripBookingId, int customerId, Driver driver, String fromLocation, String toLocation,
+	public TripBooking(Customer customer, Driver driver, String fromLocation, String toLocation,
 			LocalDateTime fromDateTime, LocalDateTime toDateTime, boolean status, float distanceInKm, float bill) {
-		this.tripBookingId = tripBookingId;
-		this.customerId = customerId;
+		this.customer = customer;
 		this.driver = driver;
 		this.fromLocation = fromLocation;
 		this.toLocation = toLocation;
@@ -60,12 +59,12 @@ public class TripBooking {
 		this.tripBookingId = tripBookingId;
 	}
 
-	public int getCustomerId() {
-		return customerId;
+	public Customer getCustomer() {
+		return customer;
 	}
 
-	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public Driver getDriver() {
