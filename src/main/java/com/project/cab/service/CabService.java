@@ -1,10 +1,12 @@
 package com.project.cab.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.cab.model.Cab;
-import com.project.cab.model.Customer;
 import com.project.cab.repository.CabRepository;
 
 @Service
@@ -23,6 +25,17 @@ public class CabService {
 	
 	public void deleteCab(int cabId) {
 		repository.deleteById(cabId);
+	}
+	
+	public List<Cab> viewCabsOfType(String carType){
+		List<Cab> cabList = repository.findAll();
+		cabList = cabList.stream().filter(cab -> cab.getCarType().equals(carType)).collect(Collectors.toList());
+		return cabList;
+	}
+	public int countCabsOfType(String carType){
+		List<Cab> cabList = repository.findAll();
+		int count = (int)cabList.stream().filter(cab -> cab.getCarType().equals(carType)).count();
+		return count;
 	}
 	
 }
