@@ -29,6 +29,9 @@ public class CabService {
 	
 	public List<Cab> viewCabsOfType(String carType){
 		List<Cab> cabList = repository.findAll();
+		if(carType.equals("All")) {
+			return cabList;
+		}
 		cabList = cabList.stream().filter(cab -> cab.getCarType().equals(carType)).collect(Collectors.toList());
 		return cabList;
 	}
