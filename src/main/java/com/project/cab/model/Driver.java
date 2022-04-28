@@ -1,24 +1,19 @@
 package com.project.cab.model;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name="DRIVER")
-public class Driver extends AbstractUser{
-	//AD changing
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+@DiscriminatorValue("D")
+public class Driver extends User{
+	private static int countD = 0;
+	
 	@Column(name = "driver_id")
-	private int driverId;
+	private int driverId = ++countD;
 	
 	@Column(name = "licence_number")
 	private String licenceNo;

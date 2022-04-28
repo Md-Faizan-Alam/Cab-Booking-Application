@@ -1,7 +1,5 @@
 package com.project.cab.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,6 +44,7 @@ public class ApplicationController {
 		driverService.insertDriver(driver3);
 		driverService.insertDriver(driver4);
 		driverService.insertDriver(driver5);
+		
 //		List<Driver> driverList = driverService.viewBestDrivers();
 //		Driver driver = driverService.viewDriver(1);
 //		for(Driver driver1:driverList) {
@@ -53,6 +52,8 @@ public class ApplicationController {
 //		}
 //		System.out.println();
 //		System.out.println(driver.getLicenceNo()+" : "+driver.getRating());
+		
+//		Customer customer1 = new Customer("Mohan","mohan12","redstreet","9000002201","mohan@123gmail.com");
 		return new ModelAndView("home");
 	}
 	@GetMapping("/login")

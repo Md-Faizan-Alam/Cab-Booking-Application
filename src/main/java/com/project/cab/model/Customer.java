@@ -1,21 +1,16 @@
 package com.project.cab.model;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name="CUSTOMER")
-public class Customer extends AbstractUser{
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int customerId;
+@DiscriminatorValue("C")
+public class Customer extends User{
+	private static int count = 0;
+
+	private int customerId = ++count;
 
 	public Customer() {}
 
