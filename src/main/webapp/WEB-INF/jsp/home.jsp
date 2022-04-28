@@ -63,7 +63,7 @@
         <a class="press" href="/register">Register</a>
     </div>
 </header>
-<div id="advert">*Some random slogan*</div>
+<div id="advert">Keep Moving</div>
 <footer></footer>
 </body>
 </html>

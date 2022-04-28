@@ -7,11 +7,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.project.cab.model.Cab;
 import com.project.cab.model.Driver;
+import com.project.cab.repository.LocationRepository;
 import com.project.cab.service.CabService;
 import com.project.cab.service.DriverService;
 
 @RestController
 public class ApplicationController {
+	@Autowired
+	LocationRepository locationRepository;
 	@Autowired
 	CabService cabService;
 	@Autowired
