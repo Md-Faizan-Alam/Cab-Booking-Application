@@ -35,11 +35,38 @@ public class DriverService {
 	}
 	
 	public Driver viewDriver(int driverId){
-		Optional<Driver> driverOptional = (Optional<Driver>) repository.findById(driverId);
-		Driver driver = null;
-		if(driverOptional.isPresent()) {
-			 driver = driverOptional.get();
+		List<Driver> driverList = repository.findAll();
+		for(Driver driver:driverList) {
+			if(driver.getDriverId()==driverId) {
+				return driver;
+			}
 		}
-		return driver;
+		return null;
+	}
+	public Driver viewDriver(String userName){
+		List<Driver> driverList = repository.findAll();
+		for(Driver driver:driverList) {
+			if(driver.getUsername().equals(userName)) {
+				return driver;
+			}
+		}
+		return null;
+	}
+	public boolean validateDriver(String userName,String password) {
+		List<Driver> driverList = repository.findAll();
+		for(Driver driver:driverList) {
+			if(driver.getEmail().equalsIgnoreCase(userName) || driver.getUsername().equalsIgnoreCase(userName)) {
+				if(driver.getPassword().equals(password)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public List<Driver> viewDriversWithCarType(String carType){
+		List<Driver> driverList = repository.findAll();
+		driverList = driverList.stream().filter(driver -> driver.getCab().getCarType().equals(carType)).collect(Collectors.toList());
+		return driverList;
 	}
 }

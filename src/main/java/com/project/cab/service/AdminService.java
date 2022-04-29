@@ -36,5 +36,26 @@ public class AdminService {
 		tripList = tripList.stream().filter(trip -> trip.getCustomer().getCustomerId()==customerId).collect(Collectors.toList());
 		return tripList;
 	}
+	public boolean validateAdmin(String userName,String password) {
+		List<Admin> adminList = adminRepository.findAll();
+		for(Admin admin:adminList) {
+			if(admin.getEmail().equalsIgnoreCase(userName) || admin.getUsername().equalsIgnoreCase(userName)) {
+				if(admin.getPassword().equals(password)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public Admin viewAdmin(String userName) {
+		List<Admin> adminList = adminRepository.findAll();
+		for(Admin admin:adminList) {
+			if(admin.getUsername().equals(userName)) {
+				return admin;
+			}
+		}
+		return null;
+	}
 	
 }

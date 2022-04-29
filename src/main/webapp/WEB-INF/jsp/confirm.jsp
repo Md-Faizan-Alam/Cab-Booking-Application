@@ -85,13 +85,14 @@
     Your Trip Details :
     <hr>
     <div class="info">
-        From : ${cab.getCarType()}<br>
-        To : ${center.getAddress()}<br>
-        Date : ${center.getAddress()}<br>
-        Distance : ${center.getAddress()}<br>
-        Bill : ${center.getAddress()}<br>
+        From : ${fromLocation}<br>
+        To : ${toLocation}<br>
+        Date : <br>
+        License No. : ${driver.getLicenceNo()} <br>
+        Distance : <br>
+        Bill : <br>
         Your Cab is on the way<br>
-        <a href="/home" class="press">Back to Home</a>
+        <a href="/book" class="press">Back to Home</a>
 
     </div>
 </div>

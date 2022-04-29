@@ -2,15 +2,24 @@ package com.project.cab.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.project.cab.model.Cab;
+import com.project.cab.model.Admin;
+import com.project.cab.model.Customer;
+import com.project.cab.model.Driver;
 import com.project.cab.model.Location;
 import com.project.cab.repository.LocationRepository;
+import com.project.cab.repository.UserRepository;
+import com.project.cab.service.AdminService;
 import com.project.cab.service.CabService;
+import com.project.cab.service.CustomerService;
 import com.project.cab.service.DriverService;
 
 @RestController
@@ -20,57 +29,18 @@ public class ApplicationController {
 	@Autowired
 	CabService cabService;
 	@Autowired
+	CustomerService customerService;
+	@Autowired
 	DriverService driverService;
-	private static int currentUser = 0;
+	@Autowired
+	AdminService adminService;
+	@Autowired
+	UserRepository userRepository;
+	
+	private static int customerId = 0 ;
 	
 	@GetMapping("/")
 	public ModelAndView homePage() {
-		
-//		Location local1 = new Location("Exide");
-//		Location local2 = new Location("NarkelBagan");
-//		Location local3 = new Location("Seven-Point");
-//		Location local4 = new Location("Rajabazar");
-//		Location local5 = new Location("Khidderpore");
-//		
-//		locationRepository.save(local1);
-//		locationRepository.save(local2);
-//		locationRepository.save(local3);
-//		locationRepository.save(local4);
-//		locationRepository.save(local5);
-		
-//		Cab cab1 = new Cab("Sedan", 250);
-//		Cab cab2 = new Cab("Prime", 230);
-//		Cab cab3 = new Cab("Share", 150);
-//		Cab cab4 = new Cab("Mini", 200);
-//		Cab cab5 = new Cab("InterCity", 500);
-//		
-//		cabService.insertCab(cab1);
-//		cabService.insertCab(cab2);
-//		cabService.insertCab(cab3);
-//		cabService.insertCab(cab4);
-//		cabService.insertCab(cab5);
-//		
-//		Driver driver1 = new Driver("Mohan","mohan12","redstreet","9000002201","mohan@123gmail.com","mohan_123",4.3f,cab1);
-//		Driver driver2 = new Driver("Rohan","rohan12","bluestreet","9000002232","rohan@gmail.com","rohan_123",4.5f,cab2);
-//		Driver driver3 = new Driver("Sohan","sohan12","redstreet","9000002203","sohan@123gmail.com","sohan_123",4.0f,cab3);
-//		Driver driver4 = new Driver("Kohan","kohan12","redstreet","9000056201","kohan@123gmail.com","kohan_123",3.5f,cab4);
-//		Driver driver5 = new Driver("Shohan","shohan12","redstreet","9000672201","shohan@123gmail.com","shohan_123",4.5f,cab5);
-//		
-//		driverService.insertDriver(driver1);
-//		driverService.insertDriver(driver2);
-//		driverService.insertDriver(driver3);
-//		driverService.insertDriver(driver4);
-//		driverService.insertDriver(driver5);
-		
-//		List<Driver> driverList = driverService.viewBestDrivers();
-//		Driver driver = driverService.viewDriver(1);
-//		for(Driver driver1:driverList) {
-//			System.out.println(driver1.getLicenceNo()+" : "+driver1.getRating());			
-//		}
-//		System.out.println();
-//		System.out.println(driver.getLicenceNo()+" : "+driver.getRating());
-		
-//		Customer customer1 = new Customer("Mohan","mohan12","redstreet","9000002201","mohan@123gmail.com");
 		return new ModelAndView("home");
 	}
 	@GetMapping("/login")
@@ -81,19 +51,76 @@ public class ApplicationController {
 	public ModelAndView registerPage() {
 		return new ModelAndView("register");
 	}
-	@GetMapping("/customerLog")
-	public ModelAndView customerLog() {
+	
+	@PostMapping("/customerLog")
+	public ModelAndView customerLog(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("customerLog");
-		List<Cab> cabList = cabService.viewCabsOfType("All");
-		mav.addObject("cabList", cabList);
+		String fromLocation = (String)request.getParameter("fromLocation");
+		String toLocation = (String)request.getParameter("toLocation");
+		String carType = (String)request.getParameter("carType");
+		List<Driver> driverList = driverService.viewDriversWithCarType(carType);
+		mav.addObject("driverList",driverList);
+		mav.addObject("fromLocation",fromLocation);
+		mav.addObject("toLocation",toLocation);
 		return mav;
 	}
+	
 	
 	@GetMapping("/book")
 	public ModelAndView bookingPage() {
 		ModelAndView mav = new ModelAndView("book");
+		String userName = customerService.viewCustomer(customerId).getUsername();
+		mav.addObject("userName",userName);
 		List<Location> locationList = locationRepository.findAll();
 		mav.addObject("locationList", locationList);
+		return mav;
+	}
+	
+	@PostMapping("/confirm")
+	public ModelAndView confirmationPage(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("confirm");
+		String fromLocation = request.getParameter("fromLocation");
+		String toLocation = request.getParameter("toLocation");
+		int driverId = Integer.parseInt(request.getParameter("driverId"));
+		Driver driver = driverService.viewDriver(driverId);
+		mav.addObject("driver", driver);
+		mav.addObject("toLocation", toLocation);
+		mav.addObject("fromLocation", fromLocation);
+		return mav;
+	}
+	@PostMapping("/sign")
+	public ModelAndView signIn(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("login");
+		String userName = (String)request.getParameter("userName");
+		String password = (String)request.getParameter("password");
+		String type = (String)request.getParameter("type");
+		System.out.println(userName+" "+password+" "+type);
+		switch (type) {
+		case "A":
+			Admin admin = adminService.viewAdmin(userName);
+			if(admin != null && admin.getPassword().equals(password)) {
+				mav.setViewName("admin");
+				mav.addObject("admin", admin);
+			}
+			break;
+		case "C":
+			Customer customer = customerService.viewCustomer(userName);
+			if(customer != null && customer.getPassword().equals(password)) {
+				mav.setViewName("book");
+				customerId = customer.getCustomerId();
+				mav.addObject("userName", userName);
+				List<Location> locationList = locationRepository.findAll();
+				mav.addObject("locationList", locationList);
+			}
+			break;
+		case "D":
+			Driver driver = driverService.viewDriver(userName);
+			if(driver!=null && driver.getPassword().equals(password)) {
+				mav.setViewName("driver");
+				mav.addObject("driver", driver);
+			}
+			break;
+		}
 		return mav;
 	}
 	

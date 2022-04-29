@@ -33,13 +33,16 @@
     #advert{
         background-color: rgb(26, 26, 26);
         color: white;
-        padding: 100px;
+        padding: 50px 50px 100px;
         margin: 100px;
         width: 600px;
         height: 100px;
-        font-size: 30px;
+        font-size: 45px;
+        font-family: 'Gill Sans', 'Gill Sans MT','Trebuchet MS', sans-serif;
+        border-radius: 40px;
     }
     .press{
+        background-color: black;
         border: 2px solid white;
         border-radius: 10px;
         padding: 10px 20px;
@@ -51,7 +54,7 @@
     #buttonContainer{
         position: absolute;
         right: 50px;
-        top: 50px;
+        top: 40px;
     }
 </style>
 </head>

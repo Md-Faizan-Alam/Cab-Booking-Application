@@ -33,13 +33,24 @@ public class CustomerService {
 	}
 	
 	public Customer viewCustomer(int customerId){
-		Optional<Customer> customerOptional = (Optional<Customer>) repository.findById(customerId);
-		Customer customer = null;
-		if(customerOptional.isPresent()) {
-			 customer = customerOptional.get();
+		List<Customer> customerList = repository.findAll();
+		for(Customer customer:customerList) {
+			if(customer.getCustomerId()==customerId) {
+				return customer;
+			}
 		}
-		return customer;
+		return null;
 	}
+	public Customer viewCustomer(String userName){
+		List<Customer> customerList = repository.findAll();
+		for(Customer customer:customerList) {
+			if(customer.getUsername().equals(userName)) {
+				return customer;
+			}
+		}
+		return null;
+	}
+
 	
 	public boolean validateCustomer(String username, String password) {
 		List<Customer> customersList = repository.findAll();
@@ -49,10 +60,8 @@ public class CustomerService {
 					return true;
 				}
 			}
-			
 		}
 		return false;
-		
 	}
 	
 }

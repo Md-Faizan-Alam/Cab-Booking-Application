@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Wheelin - Username</title>
+<title>Wheelin - ${customer.getUsername()}</title>
 <style>
     *{
         margin: 0px;
@@ -71,17 +71,6 @@
         padding: 20px;
         line-height: 50px;
     }
-    #type{
-        position: relative;
-        left: 200px;
-        background-color: black;
-        color: white;
-        border: 1px solid white;
-        border-radius: 8px;
-        padding: 5px;
-        font-size: 15px;
-        margin: 10px;
-    }
 </style>
 </head>
 <body>
@@ -90,21 +79,19 @@
 </header>
 <div id="advert">
     Available Cabs :
-    <select id="type" name="carType">
-    <option value="All">All</option>
-    <option value="Sedan">Sedan</option>
-    <option value="Mini">Mini</option>
-    <option value="Share">Share</option>
-    <option value="InterCity">InterCity</option>
-    <option value="Prime">Prime</option>
-    </select>
     <hr>
-    <c:forEach items="${cabList}" var="cab">
-    <div class="info">
-        Type : ${cab.getCarType()}<br>
-        Rate : ${cab.getPerKmRate()}<br>
-        <a href="/book" class="press">Book</a>
-    </div>
+    <c:forEach items="${driverList}" var="driver">
+        <form action="/confirm" method="post">
+            <div class="info">
+                Type : ${driver.getCab().getCarType()}<br>
+                Rate : ${driver.getCab().getPerKmRate()}<br>
+                Rating : ${driver.getRating()}<br>
+                <input type="hidden" name="driverId" value="${driver.getDriverId()}">
+                <input type="hidden" name="fromLocation" value="${fromLocation}">
+                <input type="hidden" name="toLocation" value="${toLocation}">
+                <button type="submit" class="press">Book</button>
+            </div>
+        </form>
     </c:forEach>
 </div>
 <footer></footer>
