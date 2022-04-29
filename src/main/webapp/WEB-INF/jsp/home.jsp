@@ -63,7 +63,8 @@
     <p id="headTitle">Wheelin</p>
     <div id="buttonContainer">
         <a class="press" href="/login">Login</a>
-        <a class="press" href="/register">Register</a>
+        <a class="press" href="/registerCustomer">Register As Customer</a>
+        <a class="press" href="/registerDriver">Register As Driver</a>
     </div>
 </header>
 <div id="advert">Keep Moving</div>

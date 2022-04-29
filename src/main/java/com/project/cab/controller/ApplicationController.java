@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.cab.model.Admin;
+import com.project.cab.model.Cab;
 import com.project.cab.model.Customer;
 import com.project.cab.model.Driver;
 import com.project.cab.model.Location;
@@ -47,9 +48,59 @@ public class ApplicationController {
 	public ModelAndView loginPage() {
 		return new ModelAndView("login");
 	}
-	@GetMapping("/register")
-	public ModelAndView registerPage() {
-		return new ModelAndView("register");
+	@GetMapping("/registerCustomer")
+	public ModelAndView registerCustomerPage() {
+		return new ModelAndView("registerCustomer");
+	}
+	@GetMapping("/registerDriver")
+	public ModelAndView registerDriverPage() {
+		return new ModelAndView("registerDriver");
+	}
+	
+	@PostMapping("/saveCustomer")
+	public ModelAndView saveCustomer(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("home");
+		String userName = (String)request.getParameter("userName");
+		String address = (String)request.getParameter("address");
+		String mobileNumber = (String)request.getParameter("mobileNumber");
+		String email = (String)request.getParameter("email");
+		String password1 = (String)request.getParameter("password1");
+		String password2 = (String)request.getParameter("password2");
+		if(!password1.equals(password2)) {
+			mav.setViewName("registerCustomer");
+			return mav;
+		}
+		Customer customer = new Customer(userName,password1,address,mobileNumber,email);
+		customerService.insertCustomer(customer);
+		return mav;
+		
+	}
+	
+	@PostMapping("/saveDriver")
+	public ModelAndView saveDriver(HttpServletRequest request) {
+		System.out.println("I was her 1");
+		ModelAndView mav = new ModelAndView("home");
+		System.out.println("I was her 2");
+		String userName = (String)request.getParameter("userName");
+		String address = (String)request.getParameter("address");
+		String mobileNumber = (String)request.getParameter("mobileNumber");
+		String email = (String)request.getParameter("email");
+		String licenceNo = (String)request.getParameter("licenceNo");
+		String password1 = (String)request.getParameter("password1");
+		String password2 = (String)request.getParameter("password2");
+		System.out.println("I was her 3");
+		if(!password1.equals(password2)) {
+			System.out.println("I was her 4");
+			mav.setViewName("registerDriver");
+			return mav;
+		}
+		System.out.println("I was her 5");
+		String carType = (String)request.getParameter("carType");
+		Cab cab = new Cab(carType, Cab.rateMap.get(carType));
+		Driver driver = new Driver(userName,password1,address,mobileNumber,email,licenceNo,0.0f,cab);
+		driverService.insertDriver(driver);
+		System.out.println("I was her 6");
+		return mav;
 	}
 	
 	@PostMapping("/customerLog")

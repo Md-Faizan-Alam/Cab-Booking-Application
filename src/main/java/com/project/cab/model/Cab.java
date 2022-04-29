@@ -1,5 +1,8 @@
 package com.project.cab.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,6 +22,16 @@ public class Cab {
 	private String carType;
 	
 	private float perKmRate;
+	
+	public static transient Map<String, Float> rateMap = new HashMap<>();
+	
+	static {
+		rateMap.put("Sedan", 250f);
+		rateMap.put("Prime", 230f);
+		rateMap.put("Share", 150f);
+		rateMap.put("Mini", 200f);
+		rateMap.put("InterCity", 500f);
+	}
 	
 	public Cab() {}
 
