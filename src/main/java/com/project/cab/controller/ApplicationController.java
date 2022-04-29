@@ -108,7 +108,7 @@ public class ApplicationController {
 			if(customer != null && customer.getPassword().equals(password)) {
 				mav.setViewName("book");
 				customerId = customer.getCustomerId();
-				mav.addObject("userName", userName);
+				mav.addObject("userName", customer.getUsername());
 				List<Location> locationList = locationRepository.findAll();
 				mav.addObject("locationList", locationList);
 			}

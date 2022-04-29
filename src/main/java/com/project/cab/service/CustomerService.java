@@ -44,7 +44,7 @@ public class CustomerService {
 	public Customer viewCustomer(String userName){
 		List<Customer> customerList = repository.findAll();
 		for(Customer customer:customerList) {
-			if(customer.getUsername().equals(userName)) {
+			if(customer.getUsername().equals(userName) || customer.getEmail().equals(userName)) {
 				return customer;
 			}
 		}

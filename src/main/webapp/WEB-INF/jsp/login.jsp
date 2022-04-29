@@ -88,7 +88,7 @@
         <option value="D">Driver</option>
     </select><br>
     <label for="userName">Username: &nbsp;</label>
-    <input type="text" name="userName" placeholder="Username"><br>
+    <input type="text" name="userName" placeholder="Username or Email"><br>
     <label for="password">Password: &nbsp;</label>
     <input type="password" name="password" placeholder="Password"><br>
     <input type="submit" id="login" value="Login">
