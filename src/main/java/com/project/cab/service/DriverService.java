@@ -66,6 +66,9 @@ public class DriverService {
 	
 	public List<Driver> viewDriversWithCarType(String carType){
 		List<Driver> driverList = repository.findAll();
+		if(carType.equals("All")) {
+			return driverList;
+		}
 		driverList = driverList.stream().filter(driver -> driver.getCab().getCarType().equals(carType)).collect(Collectors.toList());
 		return driverList;
 	}
