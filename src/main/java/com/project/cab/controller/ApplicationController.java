@@ -127,6 +127,20 @@ public class ApplicationController {
 		return mav;
 	}
 	
+	@PostMapping("/adminLog")
+	public ModelAndView adminLog(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("adminLog");
+//		int customerId = (int)request.getParameter(customerId);
+//		String userName = (String)request.getParameter("userName");
+//		String licenceNo = (String)request.getParameter("licenceNo");
+//		String carType = (String)request.getParameter("carType");
+//		List<Driver> driverList = driverService.viewDriversWithCarType(carType);
+//		mav.addObject("driverList",driverList);
+//		mav.addObject("userName",userName);
+//		mav.addObject("licenceNo",licenceNo);
+		return new ModelAndView("adminLog");
+//		return mav;
+	}
 	
 	@GetMapping("/book")
 	public ModelAndView bookingPage() {
