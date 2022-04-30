@@ -6,11 +6,14 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Entity
 @Table(name="DRIVER")
 @DiscriminatorValue("D")
 public class Driver extends User{
-	private static int countD = 0;
+	private static transient int countD = 0;
 	
 	@Column(name = "driver_id")
 	private int driverId = ++countD;
@@ -19,6 +22,7 @@ public class Driver extends User{
 	private String licenceNo;
 	
 	@OneToOne(targetEntity = Cab.class)
+	@Cascade(CascadeType.ALL)
 	private Cab cab;
 
 	@Column(name = "rating_of_driver")

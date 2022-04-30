@@ -1,9 +1,10 @@
 package com.project.cab.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,10 +39,19 @@ public class ApplicationController {
 	@Autowired
 	UserRepository userRepository;
 	
-	private static int customerId = 0 ;
+	public Map<String,Float> rateMap = new HashMap<>();
+	
+	private int customerId = 0 ;
 	
 	@GetMapping("/")
 	public ModelAndView homePage() {
+		if(rateMap.isEmpty()) {
+			rateMap.put("Sedan",250f);
+			rateMap.put("Prime",230f);
+			rateMap.put("Share",150f);
+			rateMap.put("Mini",200f);
+			rateMap.put("InterCity",500f);
+		}
 		return new ModelAndView("home");
 	}
 	@GetMapping("/login")
@@ -78,9 +88,7 @@ public class ApplicationController {
 	
 	@PostMapping("/saveDriver")
 	public ModelAndView saveDriver(HttpServletRequest request) {
-		System.out.println("I was her 1");
 		ModelAndView mav = new ModelAndView("home");
-		System.out.println("I was her 2");
 		String userName = (String)request.getParameter("userName");
 		String address = (String)request.getParameter("address");
 		String mobileNumber = (String)request.getParameter("mobileNumber");
@@ -88,18 +96,20 @@ public class ApplicationController {
 		String licenceNo = (String)request.getParameter("licenceNo");
 		String password1 = (String)request.getParameter("password1");
 		String password2 = (String)request.getParameter("password2");
-		System.out.println("I was her 3");
+		System.out.println("I was here 1");
 		if(!password1.equals(password2)) {
-			System.out.println("I was her 4");
 			mav.setViewName("registerDriver");
 			return mav;
 		}
-		System.out.println("I was her 5");
+		System.out.println("I was here 2");
 		String carType = (String)request.getParameter("carType");
-		Cab cab = new Cab(carType, Cab.rateMap.get(carType));
+		System.out.println("I was here 3");
+		Cab cab = new Cab(carType, rateMap.get(carType));
+		System.out.println("I was here 4");
 		Driver driver = new Driver(userName,password1,address,mobileNumber,email,licenceNo,0.0f,cab);
+		System.out.println("I was here 5");
 		driverService.insertDriver(driver);
-		System.out.println("I was her 6");
+		System.out.println("I was here 6");
 		return mav;
 	}
 	
