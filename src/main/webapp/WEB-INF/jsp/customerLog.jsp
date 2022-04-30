@@ -86,7 +86,7 @@
                 Type : ${driver.getCab().getCarType()}<br>
                 Rate : ${driver.getCab().getPerKmRate()}<br>
                 Rating : ${driver.getRating()}<br>
-                <input type="hidden" name="driverId" value="${driver.getDriverId()}">
+                <input type="hidden" name="driverId" value="${driver.getUserId()}">
                 <input type="hidden" name="fromLocation" value="${fromLocation}">
                 <input type="hidden" name="toLocation" value="${toLocation}">
                 <button type="submit" class="press">Book</button>

@@ -13,10 +13,6 @@ import org.hibernate.annotations.CascadeType;
 @Table(name="DRIVER")
 @DiscriminatorValue("D")
 public class Driver extends User{
-	private static transient int countD = 0;
-	
-	@Column(name = "driver_id")
-	private int driverId = ++countD;
 	
 	@Column(name = "licence_number")
 	private String licenceNo;
@@ -36,14 +32,6 @@ public class Driver extends User{
 		this.cab = cab;
 		this.rating = rating;
 		
-	}
-
-	public int getDriverId() {
-		return driverId;
-	}
-
-	public void setDriverId(int driverId) {
-		this.driverId = driverId;
 	}
 
 	public String getLicenceNo() {

@@ -36,7 +36,7 @@ public class DriverService {
 	public Driver viewDriver(int driverId){
 		List<Driver> driverList = repository.findAll();
 		for(Driver driver:driverList) {
-			if(driver.getDriverId()==driverId) {
+			if(driver.getUserId()==driverId) {
 				return driver;
 			}
 		}

@@ -38,6 +38,10 @@ public class User {
 		this.mobileNumber = mobileNumber;
 		this.email = email;
 	}
+	
+	public int getUserId() {
+		return userId;
+	}
 
 	public String getUsername() {
 		return username;

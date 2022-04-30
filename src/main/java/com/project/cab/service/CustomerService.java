@@ -34,7 +34,7 @@ public class CustomerService {
 	public Customer viewCustomer(int customerId){
 		List<Customer> customerList = repository.findAll();
 		for(Customer customer:customerList) {
-			if(customer.getCustomerId()==customerId) {
+			if(customer.getUserId()==customerId) {
 				return customer;
 			}
 		}

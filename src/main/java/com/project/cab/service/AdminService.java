@@ -33,7 +33,7 @@ public class AdminService {
 	
 	public List<TripBooking> getAllTrips(int customerId){
 		List<TripBooking> tripList = tripRepository.findAll();
-		tripList = tripList.stream().filter(trip -> trip.getCustomer().getCustomerId()==customerId).collect(Collectors.toList());
+		tripList = tripList.stream().filter(trip -> trip.getCustomer().getUserId()==customerId).collect(Collectors.toList());
 		return tripList;
 	}
 	public boolean validateAdmin(String userName,String password) {

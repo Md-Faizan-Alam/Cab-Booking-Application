@@ -2,17 +2,12 @@ package com.project.cab.model;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="ADMIN")
 @DiscriminatorValue("A")
 public class Admin extends User{
-	
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private int adminId;
 		
 	public Admin() {}
 
@@ -21,17 +16,9 @@ public class Admin extends User{
 		
 	}
 
-	public int getAdminId() {
-		return adminId;
-	}
-
-	public void setAdminId(int adminId) {
-		this.adminId = adminId;
-	}
-
 	@Override
 	public String toString() {
-		return "Admin [adminId=" + adminId + "]";
+		return "Admin [adminId=" + this.getUserId() + "]";
 	}
 	
 

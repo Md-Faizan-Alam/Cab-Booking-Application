@@ -26,6 +26,13 @@ public class DatabaseController {
 	@Autowired
 	CustomerService customerService;
 	
+	@GetMapping("/postData")
+	public void postData() {
+		postLocation();
+		postDriver();
+		postCustomer();
+	}
+	
 	@GetMapping("/postLocation")
 	public void postLocation() {
 		Location local1 = new Location("Exide");

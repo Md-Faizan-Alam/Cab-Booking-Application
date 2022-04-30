@@ -41,7 +41,7 @@ public class ApplicationController {
 	
 	public Map<String,Float> rateMap = new HashMap<>();
 	
-	private int customerId = 0 ;
+	private int userId = 0 ;
 	
 	@GetMapping("/")
 	public ModelAndView homePage() {
@@ -130,7 +130,7 @@ public class ApplicationController {
 	@GetMapping("/book")
 	public ModelAndView bookingPage() {
 		ModelAndView mav = new ModelAndView("book");
-		String userName = customerService.viewCustomer(customerId).getUsername();
+		String userName = customerService.viewCustomer(userId).getUsername();
 		mav.addObject("userName",userName);
 		List<Location> locationList = locationRepository.findAll();
 		mav.addObject("locationList", locationList);
@@ -168,7 +168,7 @@ public class ApplicationController {
 			Customer customer = customerService.viewCustomer(userName);
 			if(customer != null && customer.getPassword().equals(password)) {
 				mav.setViewName("book");
-				customerId = customer.getCustomerId();
+				userId = customer.getUserId();
 				mav.addObject("userName", customer.getUsername());
 				List<Location> locationList = locationRepository.findAll();
 				mav.addObject("locationList", locationList);

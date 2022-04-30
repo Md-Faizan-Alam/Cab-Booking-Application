@@ -26,13 +26,13 @@ public class TripBookingService {
 	
 	public List<TripBooking> viewAllTripsCustomer(int customerId){
 		List<TripBooking> tripList = repository.findAll();
-		tripList = tripList.stream().filter(trip -> trip.getCustomer().getCustomerId()==customerId).collect(Collectors.toList());
+		tripList = tripList.stream().filter(trip -> trip.getCustomer().getUserId()==customerId).collect(Collectors.toList());
 		return tripList;
 	}
 	
 	public float calculateBill(int customerId) {
 		List<TripBooking> tripList = repository.findAll();
-		tripList = tripList.stream().filter(trip -> trip.getCustomer().getCustomerId()==customerId).collect(Collectors.toList());
+		tripList = tripList.stream().filter(trip -> trip.getCustomer().getUserId()==customerId).collect(Collectors.toList());
 		float totalBill = 0;
 		for(TripBooking trip:tripList) {
 			totalBill += trip.getBill();
