@@ -51,12 +51,14 @@ public class CustomerService {
 	}
 
 	
-	public boolean validateCustomer(String username, String password) {
-		List<Customer> customersList = repository.findAll();
-		for(Customer customer:customersList) {
-			if(customer.getEmail().equalsIgnoreCase(username) || customer.getUsername().equalsIgnoreCase(username)) {
-				if(customer.getPassword().equals(password)) {
-					return true;
+	public boolean validateCustomer(String username, String password,String type) {
+		if(type.equals("C")) {
+			List<Customer> customersList = repository.findAll();
+			for(Customer customer:customersList) {
+				if(customer.getEmail().equalsIgnoreCase(username) || customer.getUsername().equalsIgnoreCase(username)) {
+					if(customer.getPassword().equals(password)) {
+						return true;
+					}
 				}
 			}
 		}

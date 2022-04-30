@@ -18,6 +18,7 @@ header {
 }
 
 #headTitle {
+	text-decoration: none;
 	font-size: 60px;
 	color: white;
 	font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
@@ -87,7 +88,7 @@ input {
 </head>
 <body>
 	<header>
-		<p id="headTitle">Wheelin</p>
+		<a href="/headHome" id="headTitle">Wheelin</a>
 	</header>
 	<div id="loginBlock">
 		<form action="/saveCustomer" method="post">

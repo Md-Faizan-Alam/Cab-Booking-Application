@@ -40,19 +40,12 @@ public class ApplicationController {
 	@Autowired
 	TripBookingService tripService;
 	
-	public Map<String,Float> rateMap = new HashMap<>();
+	public static Map<String,Float> rateMap = new HashMap<>();
 	
 	private int userId = 0 ;
 	
 	@GetMapping("/")
 	public ModelAndView homePage() {
-		if(rateMap.isEmpty()) {
-			rateMap.put("Sedan",250f);
-			rateMap.put("Prime",230f);
-			rateMap.put("Share",150f);
-			rateMap.put("Mini",200f);
-			rateMap.put("InterCity",500f);
-		}
 		return new ModelAndView("home");
 	}
 	@GetMapping("/login")
@@ -124,9 +117,11 @@ public class ApplicationController {
 		mav.addObject("driverList",driverList);
 		mav.addObject("fromLocation",fromLocation);
 		mav.addObject("toLocation",toLocation);
+		mav.addObject("userName",customerService.viewCustomer(userId).getUsername());
 		return mav;
 	}
 	
+	// FZN : I don't know what this method does. Therefore didn't make any changes
 	@PostMapping("/adminLog")
 	public ModelAndView adminLog(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("adminLog");
@@ -138,32 +133,30 @@ public class ApplicationController {
 //		mav.addObject("driverList",driverList);
 //		mav.addObject("userName",userName);
 //		mav.addObject("licenceNo",licenceNo);
-		return new ModelAndView("adminLog");
-//		return mav;
+		return mav;
 	}
 	
 	@GetMapping("/book")
 	public ModelAndView bookingPage() {
 		ModelAndView mav = new ModelAndView("book");
-		String userName = customerService.viewCustomer(userId).getUsername();
-		mav.addObject("userName",userName);
+		mav.addObject("userName",customerService.viewCustomer(userId).getUsername());
 		List<Location> locationList = locationService.getAllLocations();
 		mav.addObject("locationList", locationList);
 		return mav;
 	}
+	@GetMapping("/loggedHome")
+	public ModelAndView loggedHome() {
+		ModelAndView mav = new ModelAndView("loggedHome");
+		mav.addObject("userName",customerService.viewCustomer(userId).getUsername());
+		return mav;
+	}
+	
 	@PostMapping("/rate")
 	public ModelAndView rateDriver(HttpServletRequest request) {
-		
 		int driverId = Integer.parseInt(request.getParameter("driverId"));
 		int rating = Integer.parseInt(request.getParameter("rating"));
 		driverService.updateRating(driverId,rating);
-		
-		ModelAndView mav = new ModelAndView("book");
-		String userName = customerService.viewCustomer(userId).getUsername();
-		mav.addObject("userName",userName);
-		List<Location> locationList = locationService.getAllLocations();
-		mav.addObject("locationList", locationList);
-		return mav;
+		return bookingPage();
 	}
 	
 	@PostMapping("/confirm")
@@ -177,40 +170,46 @@ public class ApplicationController {
 		TripBooking trip = tripService.createTripBooking(customer, driver, fromLocation, toLocation);
 		tripService.insertTripBooking(trip);
 		mav.addObject("trip",trip);
+		mav.addObject("userName",customerService.viewCustomer(userId).getUsername());
 		return mav;
 	}
+	
+	@GetMapping("/logout")
+	public ModelAndView logout() {
+		userId = 0;
+		return homePage();
+	}
+	
+	@GetMapping("/headHome")
+	public ModelAndView headHome() {
+		if(userId==0) {
+			return homePage();
+		}
+		return loggedHome();
+	}
+	
+	
 	@PostMapping("/sign")
 	public ModelAndView signIn(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("login");
-		String userName = (String)request.getParameter("userName");
-		String password = (String)request.getParameter("password");
-		String type = (String)request.getParameter("type");
-		System.out.println(userName+" "+password+" "+type);
-		switch (type) {
-		case "A":
+		mav.addObject("message","Incorrect username or password");
+		String userName = request.getParameter("userName");
+		String password = request.getParameter("password");
+		String type = request.getParameter("type");
+		if(adminService.validateAdmin(userName, password, type)) {
 			Admin admin = adminService.viewAdmin(userName);
-			if(admin != null && admin.getPassword().equals(password)) {
-				mav.setViewName("admin");
-				mav.addObject("admin", admin);
-			}
-			break;
-		case "C":
+			mav.setViewName("adminLog");
+			mav.addObject("admin", admin);
+		}
+		else if(customerService.validateCustomer(userName, password, type)) {
 			Customer customer = customerService.viewCustomer(userName);
-			if(customer != null && customer.getPassword().equals(password)) {
-				mav.setViewName("book");
-				userId = customer.getUserId();
-				mav.addObject("userName", customer.getUsername());
-				List<Location> locationList = locationService.getAllLocations();
-				mav.addObject("locationList", locationList);
-			}
-			break;
-		case "D":
+			userId = customer.getUserId();
+			return bookingPage();
+		}
+		else if(driverService.validateDriver(userName, password, type)) {
 			Driver driver = driverService.viewDriver(userName);
-			if(driver!=null && driver.getPassword().equals(password)) {
-				mav.setViewName("driver");
-				mav.addObject("driver", driver);
-			}
-			break;
+			mav.setViewName("driver");
+			mav.addObject("driver", driver);
 		}
 		return mav;
 	}

@@ -53,12 +53,14 @@ public class DriverService {
 		}
 		return null;
 	}
-	public boolean validateDriver(String userName,String password) {
-		List<Driver> driverList = repository.findAll();
-		for(Driver driver:driverList) {
-			if(driver.getEmail().equalsIgnoreCase(userName) || driver.getUsername().equalsIgnoreCase(userName)) {
-				if(driver.getPassword().equals(password)) {
-					return true;
+	public boolean validateDriver(String userName,String password,String type) {
+		if(type.equals("D")) {
+			List<Driver> driverList = repository.findAll();
+			for(Driver driver:driverList) {
+				if(driver.getEmail().equalsIgnoreCase(userName) || driver.getUsername().equalsIgnoreCase(userName)) {
+					if(driver.getPassword().equals(password)) {
+						return true;
+					}
 				}
 			}
 		}

@@ -35,6 +35,7 @@ public class DatabaseController {
 		postLocation();
 		postDriver();
 		postCustomer();
+		postAdmin();
 	}
 	
 	@GetMapping("/postLocation")

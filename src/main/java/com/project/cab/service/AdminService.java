@@ -48,11 +48,12 @@ public class AdminService {
 		List<TripBooking> tripList = tripRepository.findAll();
 		return tripList;
 	}
-	public boolean validateAdmin(String userName,String password) {
-		List<Admin> adminList = adminRepository.findAll();
-		for(Admin admin:adminList) {
-			if(admin.getEmail().equalsIgnoreCase(userName) || admin.getUsername().equalsIgnoreCase(userName)) {
-				if(admin.getPassword().equals(password)) {
+	
+	public boolean validateAdmin(String userName,String password,String type) {
+		if(type.equals("A")) {
+			List<Admin> adminList = adminRepository.findAll();
+			for(Admin admin:adminList) {
+				if((admin.getEmail().equalsIgnoreCase(userName) || admin.getUsername().equalsIgnoreCase(userName)) && admin.getPassword().equals(password)) {
 					return true;
 				}
 			}
@@ -106,9 +107,9 @@ public class AdminService {
 	public List<TripBooking> getTripsCabwise(String carType) {
 		List<Cab> cabList = cabRepository.findAll();
 		for(Cab cab:cabList) {
-			if(cab.getCarType()==carType) {
+			if(cab.getCarType().equals(carType)) {
 				List<TripBooking> tripList=tripRepository.findAll();
-				tripList = tripList.stream().filter(trip -> trip.getDriver().getCab().getCarType()==carType).collect(Collectors.toList());
+				tripList = tripList.stream().filter(trip -> trip.getDriver().getCab().getCarType().equals(carType)).collect(Collectors.toList());
 				return tripList;
 			}
 		}

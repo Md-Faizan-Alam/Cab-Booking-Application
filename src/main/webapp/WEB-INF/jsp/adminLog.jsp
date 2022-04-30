@@ -18,6 +18,7 @@ header {
 }
 
 #headTitle {
+	text-decoration: none;
 	font-size: 60px;
 	color: white;
 	font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
@@ -66,11 +67,11 @@ footer {
 </head>
 <body>
 	<header>
-		<p id="headTitle">Wheelin</p>
+		<a href="/headHome" id="headTitle">Wheelin</a>
 		<div id="buttonContainer">
-			<a class="press" href="/cabManagement">Cab Management</a> <a class="press"
-				href="/customerManagement">Customer Management</a> <a class="press"
-				href="/driverManagement">Driver Management</a>
+			 <a class="press" href="/cabManagement">Cab Management</a>
+			<a class="press" href="/customerManagement">Customer Management</a>
+			<a class="press" href="/driverManagement">Driver Management</a>
 		</div>
 	</header>
 	<div id="advert">Keep Moving
