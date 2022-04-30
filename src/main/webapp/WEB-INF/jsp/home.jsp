@@ -78,6 +78,13 @@ footer {
 #bookLink:hover{
 	background-color: rgb(70, 70, 70);
 }
+#taxi{
+    height: 350px;
+    width: 350px;
+    position: absolute;
+    right: 90px;
+    top: 150px;
+}
 </style>
 </head>
 <body>
@@ -89,6 +96,7 @@ footer {
 				href="/registerDriver">Register As Driver</a>
 		</div>
 	</header>
+    <img src="/images/Taxi.jpg" id="taxi" alt="">
 	<div id="advert">Keep Moving<br><a href="/login" id="bookLink">Book a Cab</a></div>
 	<footer></footer>
 </body>

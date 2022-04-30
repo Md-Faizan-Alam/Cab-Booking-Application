@@ -117,8 +117,8 @@ footer {
 		<c:forEach items="${driverList}" var="driver">
 			<form action="/confirm" method="post">
 				<div class="info">
-					Type : ${driver.getCab().getCarType()}<br> Rate :
-					${driver.getCab().getPerKmRate()}<br> Rating :
+					Type : ${driver.getCab().getCarType()}<br>
+					PerKmRate : Rs. ${driver.getCab().getPerKmRate()}<br> Rating :
 					${driver.getRating()}<br> <input type="hidden" name="driverId"
 						value="${driver.getUserId()}"> <input type="hidden"
 						name="fromLocation" value="${fromLocation}">
