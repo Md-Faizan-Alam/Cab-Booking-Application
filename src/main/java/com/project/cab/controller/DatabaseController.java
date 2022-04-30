@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.cab.model.Admin;
 import com.project.cab.model.Cab;
 import com.project.cab.model.Customer;
 import com.project.cab.model.Driver;
 import com.project.cab.model.Location;
 import com.project.cab.repository.LocationRepository;
+import com.project.cab.service.AdminService;
 import com.project.cab.service.CabService;
 import com.project.cab.service.CustomerService;
 import com.project.cab.service.DriverService;
@@ -25,6 +27,8 @@ public class DatabaseController {
 	DriverService driverService;
 	@Autowired
 	CustomerService customerService;
+	@Autowired
+	AdminService adminService;
 	
 	@GetMapping("/postData")
 	public void postData() {
@@ -88,6 +92,14 @@ public class DatabaseController {
 		customerService.insertCustomer(customer3);
 		customerService.insertCustomer(customer4);
 		customerService.insertCustomer(customer5);
+	}
+	@GetMapping("/postAdmin")
+	public void postAdmin() {
+		Admin admin1 = new Admin("Arya","arya123","winterfell","9000002201","arya@gmail.com");		
+		Admin admin2 = new Admin("Sansa","sansa123","winterfell","9000002201","sansa@gmail.com");		
+		
+		adminService.insertAdmin(admin1);
+		adminService.insertAdmin(admin2);
 	}
 	
 	@GetMapping("/test")

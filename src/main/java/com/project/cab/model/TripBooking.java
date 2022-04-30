@@ -1,5 +1,6 @@
 package com.project.cab.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -30,7 +31,6 @@ public class TripBooking {
 	private LocalDateTime fromDateTime;
 	@Column(name = "to_time")
 	private LocalDateTime toDateTime;
-	private boolean status;
 	@Column(name = "distance_in_km")
 	private float distanceInKm;
 	@Column(name = "fare")
@@ -38,17 +38,11 @@ public class TripBooking {
 	
 	public TripBooking(){}
 	
-	public TripBooking(Customer customer, Driver driver, String fromLocation, String toLocation,
-			LocalDateTime fromDateTime, LocalDateTime toDateTime, boolean status, float distanceInKm, float bill) {
+	public TripBooking(Customer customer, Driver driver, String fromLocation, String toLocation) {
 		this.customer = customer;
 		this.driver = driver;
 		this.fromLocation = fromLocation;
 		this.toLocation = toLocation;
-		this.fromDateTime = fromDateTime;
-		this.toDateTime = toDateTime;
-		this.status = status;
-		this.distanceInKm = distanceInKm;
-		this.bill = bill;
 	}
 
 	public int getTripBookingId() {
@@ -107,14 +101,6 @@ public class TripBooking {
 		this.toDateTime = toDateTime;
 	}
 
-	public boolean isStatus() {
-		return status;
-	}
-
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
-
 	public float getDistanceInKm() {
 		return distanceInKm;
 	}
@@ -129,6 +115,10 @@ public class TripBooking {
 
 	public void setBill(float bill) {
 		this.bill = bill;
+	}
+	
+	public LocalDate getDate() {
+		return fromDateTime.toLocalDate();
 	}
 
 }

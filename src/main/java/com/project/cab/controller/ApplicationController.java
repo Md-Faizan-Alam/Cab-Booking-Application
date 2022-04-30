@@ -17,17 +17,18 @@ import com.project.cab.model.Cab;
 import com.project.cab.model.Customer;
 import com.project.cab.model.Driver;
 import com.project.cab.model.Location;
-import com.project.cab.repository.LocationRepository;
-import com.project.cab.repository.UserRepository;
+import com.project.cab.model.TripBooking;
 import com.project.cab.service.AdminService;
 import com.project.cab.service.CabService;
 import com.project.cab.service.CustomerService;
 import com.project.cab.service.DriverService;
+import com.project.cab.service.LocationService;
+import com.project.cab.service.TripBookingService;
 
 @RestController
 public class ApplicationController {
 	@Autowired
-	LocationRepository locationRepository;
+	LocationService locationService;
 	@Autowired
 	CabService cabService;
 	@Autowired
@@ -37,7 +38,7 @@ public class ApplicationController {
 	@Autowired
 	AdminService adminService;
 	@Autowired
-	UserRepository userRepository;
+	TripBookingService tripService;
 	
 	public Map<String,Float> rateMap = new HashMap<>();
 	
@@ -132,7 +133,21 @@ public class ApplicationController {
 		ModelAndView mav = new ModelAndView("book");
 		String userName = customerService.viewCustomer(userId).getUsername();
 		mav.addObject("userName",userName);
-		List<Location> locationList = locationRepository.findAll();
+		List<Location> locationList = locationService.getAllLocations();
+		mav.addObject("locationList", locationList);
+		return mav;
+	}
+	@PostMapping("/rate")
+	public ModelAndView rateDriver(HttpServletRequest request) {
+		
+		int driverId = Integer.parseInt(request.getParameter("driverId"));
+		int rating = Integer.parseInt(request.getParameter("rating"));
+		driverService.updateRating(driverId,rating);
+		
+		ModelAndView mav = new ModelAndView("book");
+		String userName = customerService.viewCustomer(userId).getUsername();
+		mav.addObject("userName",userName);
+		List<Location> locationList = locationService.getAllLocations();
 		mav.addObject("locationList", locationList);
 		return mav;
 	}
@@ -144,9 +159,10 @@ public class ApplicationController {
 		String toLocation = request.getParameter("toLocation");
 		int driverId = Integer.parseInt(request.getParameter("driverId"));
 		Driver driver = driverService.viewDriver(driverId);
-		mav.addObject("driver", driver);
-		mav.addObject("toLocation", toLocation);
-		mav.addObject("fromLocation", fromLocation);
+		Customer customer = customerService.viewCustomer(userId);
+		TripBooking trip = tripService.createTripBooking(customer, driver, fromLocation, toLocation);
+		tripService.insertTripBooking(trip);
+		mav.addObject("trip",trip);
 		return mav;
 	}
 	@PostMapping("/sign")
@@ -170,7 +186,7 @@ public class ApplicationController {
 				mav.setViewName("book");
 				userId = customer.getUserId();
 				mav.addObject("userName", customer.getUsername());
-				List<Location> locationList = locationRepository.findAll();
+				List<Location> locationList = locationService.getAllLocations();
 				mav.addObject("locationList", locationList);
 			}
 			break;

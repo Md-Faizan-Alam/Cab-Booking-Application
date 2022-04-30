@@ -14,6 +14,8 @@ public class DriverService {
 
 	@Autowired
 	DriverRepository repository;
+	@Autowired
+	TripBookingService tripService;
 	
 	public void insertDriver(Driver driver) {
 		repository.save(driver);
@@ -70,5 +72,14 @@ public class DriverService {
 		}
 		driverList = driverList.stream().filter(driver -> driver.getCab().getCarType().equals(carType)).collect(Collectors.toList());
 		return driverList;
+	}
+	
+	public void updateRating(int driverId,int rating) {
+		Driver driver = viewDriver(driverId);
+		float oldRating = driver.getRating();
+		float noOfTrips = tripService.getNoOfTrips(driverId);
+		float newRating =  ((oldRating*(noOfTrips-1))+(float)rating)/(noOfTrips);
+		driver.setRating(newRating);
+		updateDriver(driver);
 	}
 }
