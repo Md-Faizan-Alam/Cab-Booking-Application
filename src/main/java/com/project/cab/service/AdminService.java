@@ -60,7 +60,15 @@ public class AdminService {
 		}
 		return false;
 	}
-	
+	public Admin viewAdmin(int adminId){
+		List<Admin> adminList = adminRepository.findAll();
+		for(Admin admin:adminList) {
+			if(admin.getUserId()==adminId) {
+				return admin;
+			}
+		}
+		return null;
+	}
 	public Admin viewAdmin(String userName) {
 		List<Admin> adminList = adminRepository.findAll();
 		for(Admin admin:adminList) {

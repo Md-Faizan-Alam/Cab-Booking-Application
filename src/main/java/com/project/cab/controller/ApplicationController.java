@@ -125,14 +125,6 @@ public class ApplicationController {
 	@PostMapping("/adminLog")
 	public ModelAndView adminLog(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("adminLog");
-//		int customerId = (int)request.getParameter(customerId);
-//		String userName = (String)request.getParameter("userName");
-//		String licenceNo = (String)request.getParameter("licenceNo");
-//		String carType = (String)request.getParameter("carType");
-//		List<Driver> driverList = driverService.viewDriversWithCarType(carType);
-//		mav.addObject("driverList",driverList);
-//		mav.addObject("userName",userName);
-//		mav.addObject("licenceNo",licenceNo);
 		return mav;
 	}
 	
@@ -198,6 +190,7 @@ public class ApplicationController {
 		String type = request.getParameter("type");
 		if(adminService.validateAdmin(userName, password, type)) {
 			Admin admin = adminService.viewAdmin(userName);
+			userId = admin.getUserId();
 			mav.setViewName("adminLog");
 			mav.addObject("admin", admin);
 		}
@@ -211,6 +204,14 @@ public class ApplicationController {
 			mav.setViewName("driver");
 			mav.addObject("driver", driver);
 		}
+		return mav;
+	}
+	
+	@GetMapping("/cabManagement")
+	public ModelAndView cabManagement() {
+		ModelAndView mav =new ModelAndView("cabManagement");
+		mav.addObject("userName",adminService.viewAdmin(userId).getUsername());
+		mav.addObject("count",cabService.numberOfCarType());
 		return mav;
 	}
 	
