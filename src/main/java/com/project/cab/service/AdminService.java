@@ -1,6 +1,7 @@
 package com.project.cab.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -82,13 +83,13 @@ public class AdminService {
 	public List<TripBooking> getTripsCustomerwise(String userName) {
 		List<Customer> customerList = customerRepository.findAll();
 		for(Customer customer:customerList) {
-			if(customer.getUsername().equals(userName)) {
+			if(customer.getUsername().equalsIgnoreCase(userName)) {
 				List<TripBooking> tripList=tripRepository.findAll();
-				tripList = tripList.stream().filter(trip -> trip.getCustomer().getUsername().equals(userName)).collect(Collectors.toList());
+				tripList = tripList.stream().filter(trip -> trip.getCustomer().getUsername().equalsIgnoreCase(userName)).collect(Collectors.toList());
 				return tripList;
 			}
 		}
-		return null;
+		return new ArrayList<>();
 		
 	}
 	
@@ -102,26 +103,26 @@ public class AdminService {
 	public List<TripBooking> getTripsDriverwise(String userName) {
 		List<Driver> driverList = driverRepository.findAll();
 		for(Driver driver:driverList) {
-			if(driver.getUsername().equals(userName)) {
+			if(driver.getUsername().equalsIgnoreCase(userName)) {
 				List<TripBooking> tripList=tripRepository.findAll();
-				tripList = tripList.stream().filter(trip -> trip.getDriver().getUsername().equals(userName)).collect(Collectors.toList());
+				tripList = tripList.stream().filter(trip -> trip.getDriver().getUsername().equalsIgnoreCase(userName)).collect(Collectors.toList());
 				return tripList;
 			}
 		}
-		return null;
+		return new ArrayList<>();
 		
 	}
 	
 	public List<TripBooking> getTripsCabwise(String carType) {
 		List<Cab> cabList = cabRepository.findAll();
 		for(Cab cab:cabList) {
-			if(cab.getCarType().equals(carType)) {
+			if(cab.getCarType().equalsIgnoreCase(carType)) {
 				List<TripBooking> tripList=tripRepository.findAll();
-				tripList = tripList.stream().filter(trip -> trip.getDriver().getCab().getCarType().equals(carType)).collect(Collectors.toList());
+				tripList = tripList.stream().filter(trip -> trip.getDriver().getCab().getCarType().equalsIgnoreCase(carType)).collect(Collectors.toList());
 				return tripList;
 			}
 		}
-		return null;
+		return new ArrayList<>();
 		
 	}
 }

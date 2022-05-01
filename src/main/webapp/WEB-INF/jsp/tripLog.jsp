@@ -53,6 +53,13 @@
 	padding: 20px;
 	line-height: 50px;
 }
+#noResults{
+	width: 520px;
+    height: 200px;
+	line-height: 200px;
+    text-align: center;
+    display: ${display};
+}
 </style>
 </head>
 <body>
@@ -75,6 +82,7 @@
                     
 				</div>
 		</c:forEach>
+		<div class="info" id="noResults">No Results</div>
 	</div>
 	<img src="/images/Taxi.jpg" id="taxi" alt="">
 	<footer></footer>

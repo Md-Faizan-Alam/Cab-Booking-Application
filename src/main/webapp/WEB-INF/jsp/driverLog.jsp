@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,21 +58,18 @@
 <body>
 	<header>
 		<a href="/headHome" id="headTitle">Wheelin</a>
-        <span id="welcome">Welcome, ${userName}</span>
+        <span id="welcome">Welcome, ${driver.getUsername()}</span>
 		<a href="/logout" id="logout">Logout</a>
 	</header>
 	<div id="advert">
 		Your Credentials :
 		<hr>
-		<c:forEach items="${driverList}" var="driver">
-				<div class="info">
-                    Your Car Type :${driver.getCab().getCarType()}<br>
-                    Your Rating :${driver.getRating() }<br>
-                    
-				</div>
-		</c:forEach>
+		<div class="info">
+                  Your Car Type : ${driver.getCab().getCarType()}<br>
+                  Your Rating : ${driver.getRating()}<br>
+		</div>
 	</div>
-	<img src="/images/Taxi.jpg" id="taxi" alt="">
+	<img src="/images/Taxi.jpg" id="taxi" alt="Taxi">
 	<footer></footer>
 </body>
 </html>

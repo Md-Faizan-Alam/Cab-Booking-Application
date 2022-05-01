@@ -1,5 +1,6 @@
 package com.project.cab.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +47,10 @@ public class ApplicationController {
 	
 	@GetMapping("/")
 	public ModelAndView homePage() {
-		return new ModelAndView("home");
+		if(userId==0) {
+			return new ModelAndView("home");
+		}
+		return loggedHome();
 	}
 	@GetMapping("/login")
 	public ModelAndView loginPage() {
@@ -121,20 +125,19 @@ public class ApplicationController {
 		return mav;
 	}
 	
-	// FZN : I don't know what this method does. Therefore didn't make any changes
 	@PostMapping("/adminLog")
 	public ModelAndView adminLog(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("adminLog");
 		return mav;
 	}
 	
-	@PostMapping("/driverLog")
-	public ModelAndView driverLog(HttpServletRequest request) {
+	@GetMapping("/driverLog")
+	public ModelAndView driverLog() {
 		ModelAndView mav = new ModelAndView("driverLog");
-		mav.addObject("userName",driverService.viewDriver(userId).getUsername());
-		mav.addObject("driverList",driverService.viewDriversWithCarType("carType"));
-//		mav.addObject("driverList",driverService.vi);//rating method was never called but still rating was shown in front-end
-		//not getting the username  after welcome
+		mav.addObject("driver",driverService.viewDriver(userId));
+		//rating method was never called but still rating was shown in front-end
+		//FZN: As far as I can see it was called at line no. 69
+		//not getting the username  after welcome - FIXED
 		return mav;
 	}
 	
@@ -218,8 +221,8 @@ public class ApplicationController {
 		}
 		else if(driverService.validateDriver(userName, password, type)) {
 			Driver driver = driverService.viewDriver(userName);
-			mav.setViewName("driverLog");
-			mav.addObject("driver", driver);
+			userId = driver.getUserId();
+			return driverLog();
 		}
 		return mav;
 	}
@@ -250,9 +253,9 @@ public class ApplicationController {
 	@PostMapping("/search")
 	public ModelAndView search(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("tripLog");
-		List<TripBooking> tripList = null;
+		List<TripBooking> tripList = new ArrayList<>();
 		String type = request.getParameter("type");
-		String keyword = request.getParameter("keyword");//get the hodder to it's right side 
+		String keyword = request.getParameter("keyword");
 		if(type.equals("CA")) {
 			tripList = adminService.getTripsCabwise(keyword);
 		}
@@ -262,6 +265,7 @@ public class ApplicationController {
 		else if(type.equals("DR")) {
 			tripList = adminService.getTripsDriverwise(keyword);
 		}
+		mav.addObject("display",(tripList.isEmpty() ? "block" : "none"));
 		mav.addObject("tripList",tripList);
 		mav.addObject("userName",adminService.viewAdmin(userId).getUsername());
 		return mav;
