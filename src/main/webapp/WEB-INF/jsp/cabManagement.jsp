@@ -120,7 +120,7 @@ footer {
 					Total Cabs : ${cab.getAllCabs()}<br>
 					
 					 <input type="hidden" name="cabId"
-						value="${cab.getCabId()}"> 
+						value="${cab.getCabId().getCarType()}"> 
 					<button type="submit" class="press">Insert New Cab</button> <br>
 					<button type="submit" class="press">Delete a Cab</button><br>
 					<button type="submit" class="press">Update a Cab</button>
