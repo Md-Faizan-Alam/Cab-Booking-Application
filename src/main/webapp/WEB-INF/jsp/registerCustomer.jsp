@@ -6,6 +6,7 @@
 <meta charset="ISO-8859-1">
 <title>Register</title>
 <link rel="stylesheet" href="http://localhost:8085/images/cab.css">
+<link rel="stylesheet" href="cab.css">
 <style>
 #loginBlock {
 	background-color: rgb(26, 26, 26);
@@ -14,7 +15,7 @@
 	color: white;
 	font-size: 20px;
 	border-radius: 40px;
-	padding: 10px 50px;
+	padding: 30px 50px;
 	font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
 }
 
@@ -56,6 +57,10 @@ input {
 	font-size: 15px;
 	margin: 10px;
 }
+.message{
+        color: #ff1818;
+        font-size: 15px;
+    }
 </style>
 </head>
 <body>
@@ -63,6 +68,7 @@ input {
 		<a href="/headHome" id="headTitle">Wheelin</a>
 	</header>
 	<div id="loginBlock">
+        <span class="message">${message}</span><br>
 		<form action="/saveCustomer" method="post">
 			<label for="userName">Enter a Username: &nbsp;</label> <input
 				type="text" name="userName" id="" placeholder="Username"><br>

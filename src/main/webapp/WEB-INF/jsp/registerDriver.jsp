@@ -14,7 +14,7 @@
 	color: white;
 	font-size: 20px;
 	border-radius: 40px;
-	padding: 10px 50px;
+	padding: 30px 50px;
 	font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
 }
 
@@ -56,6 +56,10 @@ input {
 	font-size: 15px;
 	margin: 10px;
 }
+.message{
+        color: #ff1818;
+        font-size: 15px;
+}
 </style>
 </head>
 <body>
@@ -63,6 +67,7 @@ input {
 		<a href="/headHome" id="headTitle">Wheelin</a>
 	</header>
 	<div id="loginBlock">
+		<span class="message">${message}</span><br>
 		<form action="/saveDriver" method="post">
 			<label for="type">Car Type : </label> <select id="type"
 				name="carType">

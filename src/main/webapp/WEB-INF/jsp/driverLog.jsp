@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Home</title>
+<title>Wheelin - ${driver.getUsername()}</title>
 <link rel="stylesheet" href="http://localhost:8085/images/cab.css">
 <link rel="stylesheet" href="cab.css">
 <style>

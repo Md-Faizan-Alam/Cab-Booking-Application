@@ -46,7 +46,6 @@
 		</div>
 	</header>
 	<div id="advert">Keep Moving
-		<hr>
 			<form action="/nextPage" method="post">
 				
 			</form>

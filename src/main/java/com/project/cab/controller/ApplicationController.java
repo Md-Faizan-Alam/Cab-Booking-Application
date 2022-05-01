@@ -19,12 +19,14 @@ import com.project.cab.model.Customer;
 import com.project.cab.model.Driver;
 import com.project.cab.model.Location;
 import com.project.cab.model.TripBooking;
+import com.project.cab.model.User;
 import com.project.cab.service.AdminService;
 import com.project.cab.service.CabService;
 import com.project.cab.service.CustomerService;
 import com.project.cab.service.DriverService;
 import com.project.cab.service.LocationService;
 import com.project.cab.service.TripBookingService;
+import com.project.cab.service.UserService;
 
 @RestController
 public class ApplicationController {
@@ -40,10 +42,12 @@ public class ApplicationController {
 	AdminService adminService;
 	@Autowired
 	TripBookingService tripService;
+	@Autowired
+	UserService userService;
 	
 	public static Map<String,Float> rateMap = new HashMap<>();
 	
-	private int userId = 0 ;
+	private int userId = 0;
 	
 	@GetMapping("/")
 	public ModelAndView homePage() {
@@ -76,6 +80,7 @@ public class ApplicationController {
 		String password2 = (String)request.getParameter("password2");
 		if(!password1.equals(password2)) {
 			mav.setViewName("registerCustomer");
+			mav.addObject("message","Check your password");
 			return mav;
 		}
 		Customer customer = new Customer(userName,password1,address,mobileNumber,email);
@@ -94,20 +99,15 @@ public class ApplicationController {
 		String licenceNo = (String)request.getParameter("licenceNo");
 		String password1 = (String)request.getParameter("password1");
 		String password2 = (String)request.getParameter("password2");
-		System.out.println("I was here 1");
 		if(!password1.equals(password2)) {
 			mav.setViewName("registerDriver");
+			mav.addObject("message","Check your password");
 			return mav;
 		}
-		System.out.println("I was here 2");
 		String carType = (String)request.getParameter("carType");
-		System.out.println("I was here 3");
 		Cab cab = new Cab(carType, rateMap.get(carType));
-		System.out.println("I was here 4");
 		Driver driver = new Driver(userName,password1,address,mobileNumber,email,licenceNo,0.0f,cab);
-		System.out.println("I was here 5");
 		driverService.insertDriver(driver);
-		System.out.println("I was here 6");
 		return mav;
 	}
 	
@@ -126,7 +126,7 @@ public class ApplicationController {
 	}
 	
 	@PostMapping("/adminLog")
-	public ModelAndView adminLog(HttpServletRequest request) {
+	public ModelAndView adminLog() {
 		ModelAndView mav = new ModelAndView("adminLog");
 		return mav;
 	}
@@ -135,8 +135,6 @@ public class ApplicationController {
 	public ModelAndView driverLog() {
 		ModelAndView mav = new ModelAndView("driverLog");
 		mav.addObject("driver",driverService.viewDriver(userId));
-		//rating method was never called but still rating was shown in front-end
-		//FZN: As far as I can see it was called at line no. 69
 		//not getting the username  after welcome - FIXED
 		return mav;
 	}
@@ -144,6 +142,12 @@ public class ApplicationController {
 	@GetMapping("/book")
 	public ModelAndView bookingPage() {
 		ModelAndView mav = new ModelAndView("book");
+		if(userService.viewUser(userId) instanceof Admin) {
+			return adminLog();
+		}
+		if(userService.viewUser(userId) instanceof Driver) {
+			return driverLog();
+		}
 		mav.addObject("userName",customerService.viewCustomer(userId).getUsername());
 		List<Location> locationList = locationService.getAllLocations();
 		mav.addObject("locationList", locationList);
@@ -152,7 +156,15 @@ public class ApplicationController {
 	@GetMapping("/loggedHome")
 	public ModelAndView loggedHome() {
 		ModelAndView mav = new ModelAndView("loggedHome");
-		mav.addObject("userName",customerService.viewCustomer(userId).getUsername());
+		User user = customerService.viewCustomer(userId);
+		if(user==null) {
+			user = adminService.viewAdmin(userId);
+		}
+		if(user==null) {
+			user = driverService.viewDriver(userId);
+		}
+		String userName = user.getUsername();
+		mav.addObject("userName",userName);
 		return mav;
 	}
 	
@@ -197,7 +209,14 @@ public class ApplicationController {
 		if(userId==0) {
 			return homePage();
 		}
-		return loggedHome();
+		User user = userService.viewUser(userId);
+		if(user instanceof Customer) {
+			return loggedHome();
+		}
+		if(user instanceof Admin) {
+			return adminLog();
+		}
+		return driverLog();
 	}
 	
 	
@@ -272,3 +291,6 @@ public class ApplicationController {
 		
 	}
 }
+
+// If not registered successfully print a message
+
