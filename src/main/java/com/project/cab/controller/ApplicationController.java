@@ -215,4 +215,21 @@ public class ApplicationController {
 		return mav;
 	}
 	
+	@GetMapping("/driverManagement")
+	public ModelAndView driverManagement() {
+		ModelAndView mav =new ModelAndView("driverManagement");
+		mav.addObject("userName",adminService.viewAdmin(userId).getUsername());
+		mav.addObject("bestDrivers",driverService.viewBestDrivers());
+		return mav;
+	}
+	
+	@GetMapping("/bookingManagement")
+	public ModelAndView bookingManagement() {
+		ModelAndView mav =new ModelAndView("bookingManagement");
+		mav.addObject("userName",adminService.viewAdmin(userId).getUsername());
+		mav.addObject("count",cabService.numberOfCarType());
+		return mav;
+	}
+	
+	
 }

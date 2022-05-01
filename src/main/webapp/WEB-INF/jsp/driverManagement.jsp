@@ -78,7 +78,7 @@
                 <div id="best">
                     Best Drivers : <br>
                     <c:forEach items="${bestDrivers}" var="driver">
-                        ${driver.getUsername()} : ${driver.getRating()}
+                        ${driver.getUsername()} : ${driver.getRating()}<br>
                     </c:forEach>
                 </div>
         <hr>
