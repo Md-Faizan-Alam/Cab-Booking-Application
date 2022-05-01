@@ -8,35 +8,6 @@
 <title>Welcome - ${userName}</title>
 <link rel="stylesheet" href="http://localhost:8085/images/cab.css">
 <style>
-* {
-	margin: 0px;
-	padding: 0px;
-}
-
-header {
-	background-color: rgb(26, 26, 26);
-	height: 100px;
-	display: block;
-}
-
-#headTitle {
-	text-decoration: none;
-	font-size: 60px;
-	color: white;
-	font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
-	position: relative;
-	width: 100px;
-	top: 15px;
-	left: 50px;
-	display: inline;
-}
-
-footer {
-	background-color: rgb(26, 26, 26);
-	height: 150px;
-	color: white;
-}
-
 #advert {
 	background-color: rgb(26, 26, 26);
 	color: white;
@@ -91,30 +62,6 @@ footer {
 	padding: 5px;
 	font-size: 15px;
 	margin: 10px;
-}
-
-#welcome {
-	color: white;
-	position: absolute;
-	right: 30px;
-	top: 10px;
-	font-size: 25px;
-	font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
-}
-#logout{
-    background-color: black;
-	border: 2px solid white;
-	border-radius: 10px;
-	padding: 5px 10px;
-	font-size: 20px;
-	text-decoration: none;
-	color: white;
-	position: absolute;
-	right: 50px;
-    top: 50px;
-}
-#logout:hover{
-    background-color: rgb(70, 70, 70);
 }
 </style>
 </head>

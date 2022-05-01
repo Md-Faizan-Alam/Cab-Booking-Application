@@ -18,7 +18,6 @@
 	font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
 	border-radius: 40px;
 }
-
 .press {
 	background-color: black;
 	border: 2px solid white;
@@ -29,7 +28,6 @@
 	color: white;
 	margin: 10px;
 }
-
 #buttonContainer {
 	position: absolute;
 	right: 50px;

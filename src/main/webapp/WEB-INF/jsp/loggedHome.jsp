@@ -24,14 +24,6 @@
 	right: 50px;
 	top: 40px;
 }
-#welcome {
-	color: white;
-	position: absolute;
-	right: 30px;
-	top: 10px;
-	font-size: 25px;
-	font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
-}
 .press{
     background-color: black;
 	border: 2px solid white;
@@ -42,12 +34,6 @@
 }
 .press:hover{
     background-color: rgb(70, 70, 70);
-}
-#logout{
-	font-size: 20px;
-	position: absolute;
-	right: 50px;
-    top: 50px;
 }
 #bookLink{
 	font-size: 25px;

@@ -52,29 +52,6 @@
 	padding: 20px;
 	line-height: 50px;
 }
-#welcome {
-	color: white;
-	position: absolute;
-	right: 30px;
-	top: 10px;
-	font-size: 25px;
-	font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
-}
-#logout{
-    background-color: black;
-	border: 2px solid white;
-	border-radius: 10px;
-	padding: 5px 10px;
-	font-size: 20px;
-	text-decoration: none;
-	color: white;
-	position: absolute;
-	right: 50px;
-    top: 50px;
-}
-#logout:hover{
-    background-color: rgb(70, 70, 70);
-}
 </style>
 </head>
 <body>
