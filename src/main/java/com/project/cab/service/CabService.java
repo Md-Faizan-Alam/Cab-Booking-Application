@@ -1,5 +1,6 @@
 package com.project.cab.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +15,7 @@ public class CabService {
 	
 	@Autowired
 	CabRepository repository;
+	public String[] type = new String[] {"Sedan", "Mini", "Prime", "InterCity", "Share"};
 	
 	public void insertCab(Cab cab) {
 		repository.save(cab);
@@ -25,6 +27,14 @@ public class CabService {
 	
 	public void deleteCab(int cabId) {
 		repository.deleteById(cabId);
+	}
+	
+	public List<Integer> numberOfCarType() {
+		List<Integer> count = new ArrayList();
+		for(String carType:type) {
+			count.add(viewCabsOfType(carType).size());
+		}
+		return count;
 	}
 	
 	public List<Cab> viewCabsOfType(String carType){
