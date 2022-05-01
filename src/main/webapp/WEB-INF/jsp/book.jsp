@@ -6,6 +6,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Welcome - ${userName}</title>
+<link rel="stylesheet" href="http://localhost:8085/images/cab.css">
 <style>
 * {
 	margin: 0px;

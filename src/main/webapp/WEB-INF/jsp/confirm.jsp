@@ -5,36 +5,8 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Your Trip</title>
+<link rel="stylesheet" href="http://localhost:8085/images/cab.css">
 <style>
-* {
-	margin: 0px;
-	padding: 0px;
-}
-
-header {
-	background-color: rgb(26, 26, 26);
-	height: 100px;
-	display: block;
-}
-
-#headTitle {
-	text-decoration: none;
-	font-size: 60px;
-	color: white;
-	font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
-	position: relative;
-	width: 100px;
-	top: 15px;
-	left: 50px;
-	display: inline;
-}
-
-footer {
-	background-color: rgb(26, 26, 26);
-	height: 150px;
-	color: white;
-}
-
 #advert {
 	background-color: rgb(26, 26, 26);
 	color: white;
@@ -140,6 +112,7 @@ footer {
             </form>
 		</div>
 	</div>
+	<img src="/images/Taxi.jpg" id="taxi" alt="">
 	<footer></footer>
 </body>
 </html>

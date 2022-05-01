@@ -8,32 +8,8 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Login</title>
+<link rel="stylesheet" href="http://localhost:8085/images/cab.css">
 <style>
-    *{
-        margin: 0px;
-        padding: 0px;
-    }
-    header{
-        background-color: rgb(26, 26, 26);
-        height: 100px;
-        display: block;
-    }
-    #headTitle{
-    	text-decoration: none;
-        font-size: 60px;
-        color: white;
-        font-family: 'Gill Sans', 'Gill Sans MT','Trebuchet MS', sans-serif;
-        position: relative;
-        width: 100px;
-        top: 15px;
-        left: 50px;
-        display: inline;
-    }
-    footer{
-        background-color: rgb(26, 26, 26);
-        height: 150px;
-        color: white;
-    }
     #loginBlock{
         background-color: rgb(26, 26, 26);
         margin: 100px;
@@ -113,6 +89,7 @@
     <a href="/registerCustomer" class="register">New here? Register</a><br>
     <a href="/registerDriver" class="register">or Register as a driver</a>
 </form></div>
+    <img src="/images/Taxi.jpg" id="taxi" alt="">
 <footer></footer>
 </body>
 </html>
