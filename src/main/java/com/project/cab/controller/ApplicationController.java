@@ -128,6 +128,16 @@ public class ApplicationController {
 		return mav;
 	}
 	
+	@PostMapping("/driverLog")
+	public ModelAndView driverLog(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("driverLog");
+		mav.addObject("userName",driverService.viewDriver(userId).getUsername());
+		mav.addObject("driverList",driverService.viewDriversWithCarType("carType"));
+//		mav.addObject("driverList",driverService.vi);//rating method was never called but still rating was shown in front-end
+		//not getting the username  after welcome
+		return mav;
+	}
+	
 	@GetMapping("/book")
 	public ModelAndView bookingPage() {
 		ModelAndView mav = new ModelAndView("book");
@@ -146,7 +156,14 @@ public class ApplicationController {
 	@PostMapping("/rate")
 	public ModelAndView rateDriver(HttpServletRequest request) {
 		int driverId = Integer.parseInt(request.getParameter("driverId"));
-		int rating = Integer.parseInt(request.getParameter("rating"));
+		String str = request.getParameter("rating");
+		int rating = 0;
+		if(str==null) {
+			rating = 2;
+		}
+		else {
+			rating = Integer.parseInt(str);
+		}
 		driverService.updateRating(driverId,rating);
 		return bookingPage();
 	}
@@ -201,7 +218,7 @@ public class ApplicationController {
 		}
 		else if(driverService.validateDriver(userName, password, type)) {
 			Driver driver = driverService.viewDriver(userName);
-			mav.setViewName("driver");
+			mav.setViewName("driverLog");
 			mav.addObject("driver", driver);
 		}
 		return mav;
@@ -227,9 +244,27 @@ public class ApplicationController {
 	public ModelAndView bookingManagement() {
 		ModelAndView mav =new ModelAndView("bookingManagement");
 		mav.addObject("userName",adminService.viewAdmin(userId).getUsername());
-		mav.addObject("count",cabService.numberOfCarType());
 		return mav;
 	}
 	
-	
+	@PostMapping("/search")
+	public ModelAndView search(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("tripLog");
+		List<TripBooking> tripList = null;
+		String type = request.getParameter("type");
+		String keyword = request.getParameter("keyword");//get the hodder to it's right side 
+		if(type.equals("CA")) {
+			tripList = adminService.getTripsCabwise(keyword);
+		}
+		else if(type.equals("CU")) {
+			tripList = adminService.getTripsCustomerwise(keyword);
+		}
+		else if(type.equals("DR")) {
+			tripList = adminService.getTripsDriverwise(keyword);
+		}
+		mav.addObject("tripList",tripList);
+		mav.addObject("userName",adminService.viewAdmin(userId).getUsername());
+		return mav;
+		
+	}
 }

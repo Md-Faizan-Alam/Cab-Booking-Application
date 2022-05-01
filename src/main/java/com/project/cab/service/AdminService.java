@@ -72,19 +72,19 @@ public class AdminService {
 	public Admin viewAdmin(String userName) {
 		List<Admin> adminList = adminRepository.findAll();
 		for(Admin admin:adminList) {
-			if(admin.getUsername().equals(userName)) {
+			if(admin.getUsername().equalsIgnoreCase(userName)) {
 				return admin;
 			}
 		}
 		return null;
 	}
 	
-	public List<TripBooking> getTripsCustomerwise(int customerId) {
+	public List<TripBooking> getTripsCustomerwise(String userName) {
 		List<Customer> customerList = customerRepository.findAll();
 		for(Customer customer:customerList) {
-			if(customer.getUserId()==customerId) {
+			if(customer.getUsername().equals(userName)) {
 				List<TripBooking> tripList=tripRepository.findAll();
-				tripList = tripList.stream().filter(trip -> trip.getCustomer().getUserId()==customerId).collect(Collectors.toList());
+				tripList = tripList.stream().filter(trip -> trip.getCustomer().getUsername().equals(userName)).collect(Collectors.toList());
 				return tripList;
 			}
 		}
@@ -99,12 +99,12 @@ public class AdminService {
 	}
 	
 	
-	public List<TripBooking> getTripsDriverwise(int driverId) {
+	public List<TripBooking> getTripsDriverwise(String userName) {
 		List<Driver> driverList = driverRepository.findAll();
 		for(Driver driver:driverList) {
-			if(driver.getUserId()==driverId) {
+			if(driver.getUsername().equals(userName)) {
 				List<TripBooking> tripList=tripRepository.findAll();
-				tripList = tripList.stream().filter(trip -> trip.getDriver().getUserId()==driverId).collect(Collectors.toList());
+				tripList = tripList.stream().filter(trip -> trip.getDriver().getUsername().equals(userName)).collect(Collectors.toList());
 				return tripList;
 			}
 		}
