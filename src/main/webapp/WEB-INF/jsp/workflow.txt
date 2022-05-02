@@ -1,0 +1,44 @@
+--Pages for Everyone--
+home -	The general homepage that is displayed when the user has not logged into account.
+login -	A page that prompts you to enter your userType, username and password in order to login to your account.
+		It also contains two links to the registerCustomer and registerDriver pages, for new users.
+		If incorrect credentials are entered then the page reloads with a message "Incorrect Credentials"
+		written inside the login block
+registerCustomer  -	A page for new customers to enter their details and create an account.
+					It reloads with different messages for different errors made in the input.
+					
+registerDriver 	-	A page for new drivers to enter their details and create an account.
+					It reloads with different messages for different errors made in the input.
+
+
+--Pages only for the Admins--
+adminLog - The homepage for admins, it contains the links to cabManagement, bookingManagement and driverManagement pages
+bookingManageMent - It contains a search box for the admin to enter a keyword and
+					a dropdown to select as to what that keyword is. The keyword can be
+					Customer name, Driver name or Car Type
+cabManagement - It displays the list of Car Types and number of cars in our database that correspond to that type
+driverManagement - It displays the list of best drivers and their corresponding ratings
+tripLog  -	This page displays a list of TripBooking that match the Admin's search keyword in bookingManagement.
+			It displays a block saying 'No Results' if no matches are found
+
+
+--Pages only for Customers--
+book - 	A page that prompts the Customer to select the 'to' and 'from' locations and type of car for their ride
+customerLog	 -	The 'Next' button in book.jsp sends the customer to this page where they can select
+				from a list of available cabs by clicking on the 'Book' button corresponding to that cab.
+confirm	 -	The 'Book' button sends the customer to this page, displaying the details of their trip,
+			it also allows the user to Rate their driver. The 'Rate' button submits the rating
+			and takes the customer back to the book.jsp page
+loggedHome   -	The hompage for customers that contains a 'Book a Cab' button that takes you to the book.jsp page
+
+
+--Pages only for Drivers--
+driverLog -	The homepage for drivers. It displays the driver's details
+
+
+All pages contain the 'Logout' button except for the following -
+home
+login
+registerCustomer
+registerDriver
+adminLog (TO BE FIXED)

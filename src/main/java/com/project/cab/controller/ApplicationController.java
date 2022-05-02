@@ -28,8 +28,11 @@ import com.project.cab.service.LocationService;
 import com.project.cab.service.TripBookingService;
 import com.project.cab.service.UserService;
 
+
 @RestController
 public class ApplicationController {
+	
+	// Autowiring objects of various service classes that are required by the controller
 	@Autowired
 	LocationService locationService;
 	@Autowired
@@ -45,9 +48,14 @@ public class ApplicationController {
 	@Autowired
 	UserService userService;
 	
+	// Map to get the perKmRate from the corresponding carType
 	public static Map<String,Float> rateMap = new HashMap<>();
 	
+	// userId of the user that is currently logged in
+	// userId=0 implies logged out state
 	private int userId = 0;
+	
+	// Self-Explanatory mapping methods
 	
 	@GetMapping("/")
 	public ModelAndView homePage() {
@@ -56,19 +64,35 @@ public class ApplicationController {
 		}
 		return loggedHome();
 	}
+
 	@GetMapping("/login")
 	public ModelAndView loginPage() {
 		return new ModelAndView("login");
 	}
+	
 	@GetMapping("/registerCustomer")
 	public ModelAndView registerCustomerPage() {
 		return new ModelAndView("registerCustomer");
 	}
+	
 	@GetMapping("/registerDriver")
 	public ModelAndView registerDriverPage() {
 		return new ModelAndView("registerDriver");
 	}
 	
+	// Methods to reload register pages with an error message
+	public ModelAndView registerCustomerPage(String message) {
+		ModelAndView mav = new ModelAndView("registerCustomer");
+		mav.addObject("message", message);
+		return mav;
+	}
+	public ModelAndView registerDriverPage(String message) {
+		ModelAndView mav = new ModelAndView("registerDriver");
+		mav.addObject("message", message);
+		return mav;
+	}
+	
+	// Methods for validating and saving the new Customers and Drivers
 	@PostMapping("/saveCustomer")
 	public ModelAndView saveCustomer(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("home");
@@ -79,16 +103,20 @@ public class ApplicationController {
 		String password1 = (String)request.getParameter("password1");
 		String password2 = (String)request.getParameter("password2");
 		if(!password1.equals(password2)) {
-			mav.setViewName("registerCustomer");
-			mav.addObject("message","Check your password");
-			return mav;
+			return registerCustomerPage("Passwords don't match");
+		}
+		String message = userService.validatePassword(password1);
+		if(message!=null) {
+			return registerCustomerPage(message);
+		}
+		if(!userService.validateMobileNo(mobileNumber)) {
+			return registerCustomerPage("Invalid mobile number");
 		}
 		Customer customer = new Customer(userName,password1,address,mobileNumber,email);
 		customerService.insertCustomer(customer);
 		return mav;
 		
 	}
-	
 	@PostMapping("/saveDriver")
 	public ModelAndView saveDriver(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("home");
@@ -100,9 +128,14 @@ public class ApplicationController {
 		String password1 = (String)request.getParameter("password1");
 		String password2 = (String)request.getParameter("password2");
 		if(!password1.equals(password2)) {
-			mav.setViewName("registerDriver");
-			mav.addObject("message","Check your password");
-			return mav;
+			return registerDriverPage("Passwords don't match");
+		}
+		String message = userService.validatePassword(password1);
+		if(message!=null) {
+			return registerDriverPage(message);
+		}
+		if(!userService.validateMobileNo(mobileNumber)) {
+			return registerDriverPage("Invalid mobile number");
 		}
 		String carType = (String)request.getParameter("carType");
 		Cab cab = new Cab(carType, rateMap.get(carType));
@@ -111,6 +144,7 @@ public class ApplicationController {
 		return mav;
 	}
 	
+	// Method to show a list of available cabs to the customer
 	@PostMapping("/customerLog")
 	public ModelAndView customerLog(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("customerLog");
@@ -125,19 +159,21 @@ public class ApplicationController {
 		return mav;
 	}
 	
+	// A custom homepage for admins allowing them to manage various modules
 	@PostMapping("/adminLog")
 	public ModelAndView adminLog() {
 		ModelAndView mav = new ModelAndView("adminLog");
 		return mav;
 	}
 	
+	// A custom homepage for drivers showing them their details
 	@GetMapping("/driverLog")
 	public ModelAndView driverLog() {
 		ModelAndView mav = new ModelAndView("driverLog");
 		mav.addObject("driver",driverService.viewDriver(userId));
-		//not getting the username  after welcome - FIXED
 		return mav;
 	}
+	
 	
 	@GetMapping("/book")
 	public ModelAndView bookingPage() {
@@ -204,6 +240,9 @@ public class ApplicationController {
 		return homePage();
 	}
 	
+	// Method to be called when user clicks on the "Wheelin" logo
+	// It will check for the user's type (Admin,Customer,Driver)
+	// and send them to their respective homepages (adminLog,homePage,driverLog)
 	@GetMapping("/headHome")
 	public ModelAndView headHome() {
 		if(userId==0) {
@@ -219,7 +258,8 @@ public class ApplicationController {
 		return driverLog();
 	}
 	
-	
+	// Method to be called by the Login button on the login page
+	// Validates the credentials and sends the user to their respective homepages
 	@PostMapping("/sign")
 	public ModelAndView signIn(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("login");
@@ -246,6 +286,9 @@ public class ApplicationController {
 		return mav;
 	}
 	
+	// Admin's Management Pages (Should be accessible only to Admins)
+	
+	// Displays the no. of cabs for each carType
 	@GetMapping("/cabManagement")
 	public ModelAndView cabManagement() {
 		ModelAndView mav =new ModelAndView("cabManagement");
@@ -254,6 +297,7 @@ public class ApplicationController {
 		return mav;
 	}
 	
+	// Displays the Best Drivers
 	@GetMapping("/driverManagement")
 	public ModelAndView driverManagement() {
 		ModelAndView mav =new ModelAndView("driverManagement");
@@ -262,6 +306,7 @@ public class ApplicationController {
 		return mav;
 	}
 	
+	// Allows the admin to search for Trip Bookings by carType, Customer and Driver
 	@GetMapping("/bookingManagement")
 	public ModelAndView bookingManagement() {
 		ModelAndView mav =new ModelAndView("bookingManagement");
@@ -269,6 +314,10 @@ public class ApplicationController {
 		return mav;
 	}
 	
+	// Method to be called by the Search button in the bookingManagement page
+	// Displays the tripLog page which contains the list of all TripBookings
+	// That match the Search keyword
+	// Displays a block	with the message "No Results" if no TripBookings are found
 	@PostMapping("/search")
 	public ModelAndView search(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("tripLog");
@@ -288,9 +337,12 @@ public class ApplicationController {
 		mav.addObject("tripList",tripList);
 		mav.addObject("userName",adminService.viewAdmin(userId).getUsername());
 		return mav;
-		
 	}
 }
 
-// If not registered successfully print a message
-
+//	To be solved -	Pages that are supposed to be accessible only after logging in can be manually
+//					accessed by typing in the url in the browser, and this forced access gives an error
+//	For Example	-	Cab Managements should only be accessible by the Admin after logging in
+//					But as of right now it can be accessed by putting the url
+//					http://localhost:8085/cabManagement manually in the browser
+//					The attempt to forcefully access these pages will result in an error

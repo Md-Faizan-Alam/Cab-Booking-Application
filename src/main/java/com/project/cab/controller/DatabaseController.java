@@ -17,6 +17,10 @@ import com.project.cab.service.CabService;
 import com.project.cab.service.CustomerService;
 import com.project.cab.service.DriverService;
 
+// This Controller exists for the sole purpose of adding our Sample Data into the database
+// without making use of SQL queries
+// Basically a cheap-version of postman
+
 @RestController
 public class DatabaseController {
 	@Autowired
@@ -30,6 +34,7 @@ public class DatabaseController {
 	@Autowired
 	AdminService adminService;
 	
+	// An umbrella mapping to execute all these mapping at once
 	@GetMapping("/postData")
 	public void postData() {
 		postLocation();
@@ -102,7 +107,8 @@ public class DatabaseController {
 		adminService.insertAdmin(admin1);
 		adminService.insertAdmin(admin2);
 	}
-	
+
+	// Mapping for Testing methods by printing the output in the console
 	@GetMapping("/test")
 	public void testMethod() {
 		List<Driver> driverList = driverService.viewBestDrivers();

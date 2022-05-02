@@ -77,7 +77,7 @@ input {
 			<label for="mobileNumber">Enter your mobile number: &nbsp;</label> <input
 				type="text" name="mobileNumber" id="" placeholder="MobileNumber"><br>
 			<label for="email">Enter your Email: &nbsp;</label> <input
-				type="text" name="email" id="" placeholder="Email"><br>
+				type="email" name="email" id="" placeholder="Email"><br>
 			<label for="password">Enter a Password: &nbsp;</label> <input
 				type="password" name="password1" id="" placeholder="Password"><br>
 			<label for="password">Confirm Password: &nbsp;</label> <input

@@ -83,7 +83,7 @@ input {
 			<label for="mobileNumber">Enter your mobile number: &nbsp;</label> <input
 				type="text" name="mobileNumber" id="" placeholder="MobileNumber"><br>
 			<label for="email">Enter your Email: &nbsp;</label> <input
-				type="text" name="email" id="" placeholder="Email"><br>
+				type="email" name="email" id="" placeholder="Email"><br>
 			<label for="licenceNo">Enter the Licence Number: &nbsp;</label> <input
 				type="text" name="licenceNo" id="" placeholder="LicenceNo"><br>
 			<label for="password">Enter a Password: &nbsp;</label> <input

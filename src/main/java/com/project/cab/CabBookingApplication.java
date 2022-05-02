@@ -5,9 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.project.cab.controller.ApplicationController;
 
-// This is the first change that made
-// FZN: Rebase Test 1
-// JK: Rebase Test 3
+// The Collection rateMap used in ApplicationController is manually populated inside the
+// main method of this class so that it is filled every time the program is run
+// A small table for this purpose can be create in the database and filled using the DatabaseController (TO BE IMPLEMENTED)
+
 @SpringBootApplication
 public class CabBookingApplication {
 
