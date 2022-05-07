@@ -30,7 +30,7 @@ public class CabService {
 	}
 	
 	public List<Integer> numberOfCarType() {
-		List<Integer> count = new ArrayList();
+		List<Integer> count = new ArrayList<>();
 		for(String carType:type) {
 			count.add(viewCabsOfType(carType).size());
 		}

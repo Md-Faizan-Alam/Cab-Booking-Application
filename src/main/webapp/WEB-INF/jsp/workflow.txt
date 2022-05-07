@@ -41,4 +41,3 @@ home
 login
 registerCustomer
 registerDriver
-adminLog (TO BE FIXED)
